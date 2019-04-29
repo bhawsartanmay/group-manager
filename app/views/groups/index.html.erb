@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+<div class="card">
+  <div class="card-header">Groups</div>
+  <div class="card-body">
+    <%= link_to '+ New Group', new_group_path,class: "btn btn-primary btn-sm",style: "float:right" %>
+    <table id="group" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+          <tr>
+              <th>Group Code</th>
+              <th>Group Name</th>
+              <th>Actions</th>
+              <th>Join Group</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% @groups.each do |group| %>
+          <tr>
+            <td><%= group.code %></td>
+            <td><%= group.name %></td>
+            <td>
+              <%= link_to 'Show', group %>
+              <% if current_user.role=="admin" %>
+                <%= link_to 'Edit', edit_group_path(group) %>
+                <%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>  
+            </td>
+            <td>
+              <% if current_user.is_group_joined?(group) %>
+                <%= link_to 'Joined', "#",class: "btn btn-danger btn-sm"%>              
+              <% else %>
+                <%= link_to '+ Join Group', join_group_group_path(group),class: "btn btn-primary btn-sm"%>
+              <% end %>  
+            </td>
+          </tr>
+        <% end %>          
+      </tbody>
+    </table>    
+  </div> 
+</div>
+<br>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#group').DataTable();
+} );  
+</script>

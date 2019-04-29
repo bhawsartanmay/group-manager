@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header"><%= current_user.role == "admin" ? "All Notices" : "Your Group Notices" %></div>
+  <div class="card-body">
+    <table id="group-notice" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+          <tr>
+              <th>Topic</th>
+              <th>Group Name</th>
+              <th>Posted By</th>
+              <th>Posted By</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% @notices.each do |notice| %>
+          <tr>
+            <td><%= notice.try(:title) %></td>
+            <td><%= notice.group.try(:name) %></td>
+            <td><%= notice.user.try(:name) %></td>
+            <td><%= notice.created_at %></td>
+          </tr>
+        <% end %>          
+      </tbody>
+    </table>  	
+  </div> 
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#group-notice').DataTable();
+} );  
+</script>
